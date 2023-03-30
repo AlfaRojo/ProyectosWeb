@@ -22,7 +22,7 @@ function RegistrationForm() {
 
     localStorage.setItem('username', username);
     localStorage.setItem('password', password);
-    navigate('/login');
+    navigate('/');
   }
 
   return (

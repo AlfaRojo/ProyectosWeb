@@ -15,7 +15,7 @@ function LoginForm() {
 
     if (username === storedUsername && password === storedPassword) {
       localStorage.setItem('isAuthenticated', 'true');
-      navigate('/');
+      navigate('/home');
     } else {
       alert('Invalid username or password');
     }
