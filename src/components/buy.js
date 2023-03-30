@@ -10,6 +10,12 @@ function Buy() {
     const [symbol, setSymbol] = useState("");
     const [id, setID] = useState("");
     let history = useNavigate();
+    // const isAuthenticated = localStorage.getItem('isAuthenticated');
+
+    // if (isAuthenticated !== 'true') {
+    //     history('/login');
+    //   return null;
+    // }
 
     const handleBuy = (e) => {
         e.preventDefault();

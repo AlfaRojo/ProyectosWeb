@@ -9,6 +9,12 @@ function Add() {
     const [name, setName] = useState("");
     const [symbol, setSymbol] = useState("");
     let history = useNavigate();
+    const isAuthenticated = localStorage.getItem('isAuthenticated');
+
+    if (isAuthenticated !== 'true') {
+        history('/login');
+      return null;
+    }
 
     const handleNew = (e) => {
         e.preventDefault();

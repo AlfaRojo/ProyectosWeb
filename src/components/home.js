@@ -8,6 +8,14 @@ function Home () {
 
     let history = useNavigate();
 
+    const isAuthenticated = localStorage.getItem('isAuthenticated');
+  
+    if (isAuthenticated !== 'true' || isAuthenticated === null) {
+        history('/login');
+      return null;
+    }
+
+
     const handleSell = (id) => {
         var index = cryptos.map(function(e) { return e.id; }).indexOf(id);
         cryptos.splice(index, 1);
