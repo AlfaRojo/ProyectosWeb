@@ -23,7 +23,7 @@ function Add() {
             name: name,
             symbol: symbol,
         });
-        history("/");
+        history("/home");
     }
 
     return(

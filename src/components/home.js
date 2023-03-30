@@ -19,7 +19,7 @@ function Home () {
     const handleSell = (id) => {
         var index = cryptos.map(function(e) { return e.id; }).indexOf(id);
         cryptos.splice(index, 1);
-        history('/')
+        history('/home')
     }
 
     const handleBuy = (name, symbol, id) => {

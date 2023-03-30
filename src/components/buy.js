@@ -23,7 +23,7 @@ function Buy() {
         if (index < cryptos.length) {
             cryptos[index].name = name;
             cryptos[index].symbol = symbol;
-            history("/");
+            history("/home");
         } else {
             console.error(`Invalid index: ${index}`);
         }
@@ -33,7 +33,6 @@ function Buy() {
     useEffect(() => {
         setName(localStorage.getItem("name"))
         setSymbol(localStorage.getItem("symbol"))
-        //Set ID from Local Storage as integer
         setID(parseInt(localStorage.getItem("id")))
     }, [])
 
