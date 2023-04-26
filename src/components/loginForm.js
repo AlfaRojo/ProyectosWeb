@@ -1,25 +1,37 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './loginForm.css';
+import { GoogleLogin } from 'react-google-login';
+import { getUserAsync} from './api/createUser'
+
+const cliendID = "834090234899-ej2d2256bvvuej6gt7vjkn749b4rqlpa.apps.googleusercontent.com"
 
 function LoginForm() {
+  localStorage.clear();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
-    const storedUsername = localStorage.getItem('username');
-    const storedPassword = localStorage.getItem('password');
-
-    if (username === storedUsername && password === storedPassword) {
-      localStorage.setItem('isAuthenticated', 'true');
+    const userData = await getUserAsync(username, password);
+    if (password === userData) {
+      console.log('Login Successful');
+      localStorage.setItem('username', username);
       navigate('/home');
     } else {
       alert('Invalid username or password');
     }
   }
+
+  const onSuccess = (res) => {
+    navigate('/home');
+  };
+
+  const onFailure = (res) => {
+    alert('Login Failed');
+  };
 
   return (
     <div className="login-form">
@@ -36,6 +48,14 @@ function LoginForm() {
         <div className="form-group">
             <a href='/register'>Register</a>
         <button type="submit">Login</button>
+        <GoogleLogin
+            clientId={cliendID}
+            buttonText="Login"
+            onSuccess={onSuccess}
+            onFailure={onFailure}
+            cookiePolicy={'single_host_origin'}
+            isSignedIn={true}
+        />
         </div>
       </form>
     </div>

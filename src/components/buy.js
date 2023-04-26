@@ -1,40 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link, useNavigate  } from "react-router-dom";
+import { useNavigate  } from "react-router-dom";
 import cryptos from "./cryptos";
-import { v4 as uuidv4 } from "uuid";
+import cryptoCRUD from './api/CRUD';
 
 function Buy() {
     const [name, setName] = useState("");
     const [symbol, setSymbol] = useState("");
-    const [id, setID] = useState("");
-    let history = useNavigate();
-    // const isAuthenticated = localStorage.getItem('isAuthenticated');
+    const [crypto, setCrypto] = useState("");
 
-    // if (isAuthenticated !== 'true') {
-    //     history('/login');
-    //   return null;
-    // }
+    let history = useNavigate();
+
+    //get crypto name from params in url
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const crypto = urlParams.get('crypto');
+        setCrypto(crypto);
+    }, [])
 
     const handleBuy = (e) => {
         e.preventDefault();
-        const index = cryptos.findIndex((crypto) => crypto.id === id);
-        if (index < cryptos.length) {
-            cryptos[index].name = name;
-            cryptos[index].symbol = symbol;
-            history("/home");
-        } else {
-            console.error(`Invalid index: ${index}`);
-        }
+        cryptoCRUD({userName: localStorage.getItem('username'), cryptoID: crypto, cryptoReq: "UPDATE", cryptoData: {name: name, symbol: symbol}});
+        history('/home')
     }
-    
-
-    useEffect(() => {
-        setName(localStorage.getItem("name"))
-        setSymbol(localStorage.getItem("symbol"))
-        setID(parseInt(localStorage.getItem("id")))
-    }, [])
 
     return (
         <div>

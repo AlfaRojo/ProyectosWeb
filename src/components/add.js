@@ -1,28 +1,18 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import cryptos from "./cryptos";
-import { v4 as uuidv4 } from "uuid";
+import cryptoCRUD from './api/CRUD';
 
 function Add() {
     const [name, setName] = useState("");
     const [symbol, setSymbol] = useState("");
     let history = useNavigate();
-    const isAuthenticated = localStorage.getItem('isAuthenticated');
 
-    if (isAuthenticated !== 'true') {
-        history('/login');
-      return null;
-    }
-
-    const handleNew = (e) => {
+    const handleNew = async (e) => {
         e.preventDefault();
-        cryptos.push({
-            id: uuidv4(),
-            name: name,
-            symbol: symbol,
-        });
+        await cryptoCRUD({userName: localStorage.getItem('username'), cryptoID: symbol, cryptoReq: "CREATE", cryptoData: {name: name, symbol: symbol}});
         history("/home");
     }
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createUser } from './api/createUser';
 
 function RegistrationForm() {
   const [username, setUsername] = useState('');
@@ -7,18 +8,16 @@ function RegistrationForm() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
 
-  function handleSubmit(event) {
+async function handleSubmit(event) {
     event.preventDefault();
 
-    if (localStorage.getItem(username)) {
-      alert('Username already exists');
-      return;
-    }
-
+    
     if (password !== confirmPassword) {
       alert('Passwords do not match');
       return;
     }
+    
+    await createUser(username, password);
 
     localStorage.setItem('username', username);
     localStorage.setItem('password', password);
